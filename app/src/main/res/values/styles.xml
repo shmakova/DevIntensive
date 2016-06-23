@@ -8,4 +8,21 @@
         <item name="colorAccent">@color/color_accent</item>
     </style>
 
+    <style name="icon">
+        <item name="android:layout_width">@dimen/size_small_24</item>
+        <item name="android:layout_height">@dimen/size_small_24</item>
+    </style>
+
+    <style name="icon.left" parent="icon">
+        <item name="android:layout_gravity">top|left</item>
+        <item name="android:layout_marginTop">@dimen/spacing_medial_24</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_normal_16</item>
+    </style>
+
+    <style name="icon.right" parent="icon">
+        <item name="android:layout_gravity">top|right</item>
+        <item name="android:layout_marginTop">@dimen/spacing_medial_24</item>
+        <item name="android:layout_marginRight">@dimen/spacing_medium_32</item>
+    </style>
+
 </resources>
