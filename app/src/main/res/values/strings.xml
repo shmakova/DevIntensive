@@ -12,4 +12,5 @@
         tempor ultrices ligula eget consectetur. Aliquam erat volutpat.</string>
     <string name="projects">Проектов</string>
     <string name="loc">Написано строк кода</string>
+    <string name="rating">Рейтинг</string>
 </resources>
