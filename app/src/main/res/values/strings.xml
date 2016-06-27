@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">DevIntensive</string>
+    <string name="app_name">Шмакова Анастасия</string>
+    <string name="phone">Мобильный</string>
+    <string name="e_mail">E-mail</string>
+    <string name="vk">Профиль в VK</string>
+    <string name="github">Репозиторий</string>
+    <string name="about">О себе</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+        tincidunt metus pulvinar, tristique ligula nec, efficitur nibh. Pellentesque habitant morbi
+        tristique senectus et netus et malesuada fames ac turpis egestas. Etiam congue est felis, a
+        bibendum nunc tempor in. Donec eget gravida ex. Aenean tempus eget odio id hendrerit. Duis
+        tempor ultrices ligula eget consectetur. Aliquam erat volutpat.</string>
+    <string name="projects">Проектов</string>
+    <string name="loc">Написано строк кода</string>
+    <string name="rating">Рейтинг</string>
 </resources>
