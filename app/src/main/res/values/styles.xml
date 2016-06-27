@@ -95,4 +95,8 @@
     <style name="text_wrapper.middle" parent="text_wrapper">
         <item name="android:layout_weight">0.2</item>
     </style>
+
+    <style name="custom_dialog">
+        <item name="android:fullDark">@android:color/transparent</item>
+    </style>
 </resources>
