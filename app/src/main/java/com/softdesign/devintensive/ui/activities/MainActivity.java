@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -217,10 +218,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void saveUserInfoValue() {
         List<String> userData = new ArrayList<>();
 
-        for (EditText userFieldView  : mUserInfoViews) {
+        for (EditText userFieldView : mUserInfoViews) {
             userData.add(userFieldView.getText().toString());
         }
 
         mDataManager.getPreferenceManager().saveUserProfileData(userData);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mNavigationDrawer.isDrawerOpen(GravityCompat.START)) {
+            mNavigationDrawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+        return;
     }
 }
