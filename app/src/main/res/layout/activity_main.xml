@@ -14,10 +14,12 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:theme="@style/AppTheme.AppBarOverlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_primary">
+            android:background="@color/color_primary"
+            android:fitsSystemWindows="true">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
@@ -31,14 +33,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/profile_image_size"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/photo"/>
+                    android:src="@drawable/photo"
+                    android:fitsSystemWindows="true"/>
 
                 <android.support.v7.widget.Toolbar
                     android:theme="@style/AppTheme.PopupOverlay"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:layout_marginTop="@dimen/size_small_24"
                     android:titleTextColor="@color/white"
                     app:layout_collapseMode="pin"/>
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -226,10 +228,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <EditText
-                                    android:id="@+id/about_et"
+                                    android:id="@+id/bio_et"
                                     style="@style/edit_text"
-                                    android:hint="@string/about"
-                                    android:text="@string/lorem_ipsum"/>
+                                    android:hint="@string/bio"
+                                    android:text="@string/bio_text"/>
                             </android.support.design.widget.TextInputLayout>
                         </LinearLayout>
 
@@ -242,6 +244,15 @@
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_black_24dp"
+            app:layout_anchor="@id/appbar_layout"
+            app:layout_anchorGravity="bottom|right"
+            android:layout_marginRight="@dimen/fab_right_space"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
