@@ -18,7 +18,7 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_primary"
+            android:background="@android:color/transparent"
             android:fitsSystemWindows="true">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -60,7 +60,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/grey"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/spacing_medial_24"
+                    android:paddingBottom="@dimen/spacing_medial_24"
+                    app:layout_behavior=".ui.FancyBehavior">
 
                     <LinearLayout style="@style/text_wrapper">
                         <TextView
