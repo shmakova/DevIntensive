@@ -14,4 +14,9 @@
     <string name="loc">Написано строк кода</string>
     <string name="rating">Рейтинг</string>
     <string name="user_profile.placeholder.image">Изменить фотографию профиля</string>
+    <string name="user_profile.dialog.gallery">Загрузить из галереи</string>
+    <string name="user_profile.dialog.camera">Сделать снимок</string>
+    <string name="user_profile.dialog.cancel">Отмена</string>
+    <string name="user_profile.dialog.title">Изменить фотографию профиля</string>
+    <string name="user_profile_chose_message">Выберите файл</string>
 </resources>
