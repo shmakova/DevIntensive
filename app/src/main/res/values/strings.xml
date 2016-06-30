@@ -13,4 +13,5 @@
     <string name="projects">Проектов</string>
     <string name="loc">Написано строк кода</string>
     <string name="rating">Рейтинг</string>
+    <string name="user_profile.placeholder.image">Изменить фотографию профиля</string>
 </resources>
