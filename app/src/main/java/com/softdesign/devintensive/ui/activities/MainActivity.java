@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -389,5 +390,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .into(mProfileImage);
 
         mDataManager.getPreferenceManager().saveUserPhoto(selectedImage);
+    }
+
+    public void openApplicationSettings() {
+        Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
+        startActivityForResult(appSettingsIntent, ConstantManager.PERMISSION_REQUEST_SETTINGS_CODE);
     }
 }
