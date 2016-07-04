@@ -1,12 +1,16 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
     </style>
+    
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="icon">
         <item name="android:layout_width">@dimen/size_small_24</item>
@@ -36,8 +40,6 @@
         <item name="android:layout_width">@dimen/line_size</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/grey_light</item>
-        <item name="android:layout_marginTop">@dimen/spacing_medial_24</item>
-        <item name="android:layout_marginBottom">@dimen/spacing_medial_24</item>
     </style>
 
     <style name="item">
@@ -88,11 +90,15 @@
         <item name="android:orientation">vertical</item>
         <item name="android:layout_weight">0.3</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">@dimen/spacing_medium_32</item>
-        <item name="android:layout_marginBottom">@dimen/spacing_medium_32</item>
+        <item name="android:layout_marginTop">@dimen/spacing_normal_16</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_normal_16</item>
     </style>
 
     <style name="text_wrapper.middle" parent="text_wrapper">
         <item name="android:layout_weight">0.2</item>
+    </style>
+
+    <style name="custom_dialog">
+        <item name="android:fullDark">@android:color/transparent</item>
     </style>
 </resources>
