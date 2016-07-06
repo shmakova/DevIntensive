@@ -42,6 +42,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,6 +57,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DataManager mDataManager;
     private int mCurrentEditMode = 0;
 
+    private ImageView mCallImg;
+    private ImageView mSendEmailImg;
+    private ImageView mGithubImg;
+    private ImageView mVkImg;
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
@@ -79,6 +86,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.d(TAG, "onCreate");
         mDataManager = DataManager.getInstance();
 
+        mCallImg = (ImageView) findViewById(R.id.call_img);
+        mSendEmailImg = (ImageView) findViewById(R.id.send_email_img);
+        mGithubImg = (ImageView) findViewById(R.id.github_img);
+        mVkImg = (ImageView) findViewById(R.id.vk_img);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
@@ -102,6 +113,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mFab.setOnClickListener(this);
         mProfilePlaceholder.setOnClickListener(this);
+        mCallImg.setOnClickListener(this);
+        mSendEmailImg.setOnClickListener(this);
+        mGithubImg.setOnClickListener(this);
+        mVkImg.setOnClickListener(this);
 
         setupToolBar();
         setupDrawer();
@@ -180,6 +195,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.profile_placeholder:
                 showDialog(ConstantManager.LOAD_PROFILE_PHOTO);
+                break;
+            case R.id.call_img:
+                phoneCall();
+                break;
+            case R.id.send_email_img:
+                sendEmail();
+                break;
+            case R.id.github_img:
+                openLink(mUserGit.getText().toString());
+                break;
+            case R.id.vk_img:
+                openLink(mUserVk.getText().toString());
                 break;
         }
     }
@@ -338,13 +365,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, ConstantManager.CAMERA_REQUEST_PERMISSION_CODE);
 
-            Snackbar.make(mCoordinatorLayout, "Для корректной работы необходимо дать требуемые разрешения", Snackbar.LENGTH_LONG)
-                    .setAction("Разрешить", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                           openApplicationSettings();
-                        }
-                    }).show();
+            permissionSnackbar();
         }
     }
 
@@ -440,5 +461,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void openApplicationSettings() {
         Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
         startActivityForResult(appSettingsIntent, ConstantManager.PERMISSION_REQUEST_SETTINGS_CODE);
+    }
+
+    private void phoneCall() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) ==
+                PackageManager.PERMISSION_GRANTED) {
+            Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mUserPhone.getText()));
+            startActivity(dialIntent);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.CALL_PHONE
+            }, ConstantManager.CAMERA_REQUEST_PERMISSION_CODE);
+
+            permissionSnackbar();
+        }
+    }
+
+    private void permissionSnackbar() {
+        Snackbar.make(mCoordinatorLayout, "Для корректной работы необходимо дать требуемые разрешения", Snackbar.LENGTH_LONG)
+                .setAction("Разрешить", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openApplicationSettings();
+                    }
+                }).show();
+    }
+
+    private void sendEmail() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { mUserMail.getText().toString() });
+        startActivity(Intent.createChooser(shareIntent, "Отправить e-mail"));
+    }
+
+    private void openLink(String link) {
+        if (!link.startsWith("http://") && !link.startsWith("https://")) {
+            link = "http://" + link;
+        }
+
+        Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        startActivity(browseIntent);
     }
 }
