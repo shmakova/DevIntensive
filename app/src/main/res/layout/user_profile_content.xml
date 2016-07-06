@@ -82,8 +82,7 @@
                             android:id="@+id/phone_et"
                             style="@style/edit_text"
                             android:inputType="phone"
-                            android:hint="@string/phone"
-                            android:text="89235098145" />
+                            android:hint="@string/phone"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -110,8 +109,7 @@
                             android:id="@+id/email_et"
                             style="@style/edit_text"
                             android:inputType="textEmailAddress"
-                            android:hint="@string/e_mail"
-                            android:text="shmakova-nastya@yandex.ru"/>
+                            android:hint="@string/e_mail"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -137,8 +135,7 @@
                         <EditText
                             android:id="@+id/vk_et"
                             style="@style/edit_text"
-                            android:hint="@string/vk"
-                            android:text="vk.com/id6443224"/>
+                            android:hint="@string/vk"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -163,8 +160,7 @@
                         <EditText
                             android:id="@+id/github_et"
                             style="@style/edit_text"
-                            android:hint="@string/github"
-                            android:text="github.com/shmakova"/>
+                            android:hint="@string/github"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -189,8 +185,7 @@
                         <EditText
                             android:id="@+id/bio_et"
                             style="@style/edit_text"
-                            android:hint="@string/bio"
-                            android:text="@string/bio_text"/>
+                            android:hint="@string/bio"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
