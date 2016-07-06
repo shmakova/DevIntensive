@@ -42,9 +42,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -197,10 +194,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showDialog(ConstantManager.LOAD_PROFILE_PHOTO);
                 break;
             case R.id.call_img:
-                phoneCall();
+                phoneCall(mUserPhone.getText().toString());
                 break;
             case R.id.send_email_img:
-                sendEmail();
+                sendEmail(mUserMail.getText().toString());
                 break;
             case R.id.github_img:
                 openLink(mUserGit.getText().toString());
@@ -235,10 +232,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Показывает снэкбар с текстом
+     * @param message
+     */
     private void showSnackBar(String message) {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
 
+    /**
+     * Устанавливает тулбар
+     */
     private void setupToolBar() {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -250,6 +254,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Дроуэр
+     */
     private void setupDrawer() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mAvatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
@@ -302,6 +309,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    /**
+     * Загружает данные пользователя
+     */
     private void loadUserInfoValue() {
         List<String> userData = mDataManager.getPreferenceManager().loadUserProfileData();
 
@@ -310,6 +320,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Сохраняет данные пользователя
+     */
     private void saveUserInfoValue() {
         List<String> userData = new ArrayList<>();
 
@@ -331,6 +344,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return;
     }
 
+    /**
+     * Загружает фотографии из галереи
+     */
     private void loadPhotoFromGallery() {
         Intent takeGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         takeGalleryIntent.setType("image/");
@@ -342,6 +358,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    /**
+     * Загружает фотографии из камеры
+     */
     private void loadPhotoFromCamera() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED &&
@@ -382,22 +401,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Скрывает плейсхолдер профиля
+     */
     private void hideProfilePlaceholder() {
         mProfilePlaceholder.setVisibility(View.GONE);
     }
 
+    /**
+     * Показывает плейсхолдер профиля
+     */
     private void showProfilePlaceholder() {
         mProfilePlaceholder.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Заблочить тулбар
+     */
     private void lockToolbar() {
         mAppBarLayout.setExpanded(true, true);
         mAppBarParams.setScrollFlags(0);
         mCollapsingToolbarLayout.setLayoutParams(mAppBarParams);
     }
 
+    /**
+     * Разлочивает тулбар
+     */
     private void unlockToolbar() {
-        mAppBarParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED );
+        mAppBarParams.setScrollFlags(
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL |
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+        );
         mCollapsingToolbarLayout.setLayoutParams(mAppBarParams);
     }
 
@@ -434,6 +468,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Создает файл с изобоажением
+     * @return
+     * @throws IOException
+     */
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -450,6 +489,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return image;
     }
 
+    /**
+     * Вставляет изображение профиля
+     * @param selectedImage
+     */
     private void insertProfileImage(Uri selectedImage) {
         Picasso.with(this)
                 .load(selectedImage)
@@ -458,15 +501,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mDataManager.getPreferenceManager().saveUserPhoto(selectedImage);
     }
 
+    /**
+     * Открывает настройки приложения
+     */
     public void openApplicationSettings() {
         Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
         startActivityForResult(appSettingsIntent, ConstantManager.PERMISSION_REQUEST_SETTINGS_CODE);
     }
 
-    private void phoneCall() {
+    /**
+     * Звонит по телефону
+     * @param phone
+     */
+    private void phoneCall(String phone) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) ==
                 PackageManager.PERMISSION_GRANTED) {
-            Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mUserPhone.getText()));
+            Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
             startActivity(dialIntent);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{
@@ -477,6 +527,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Показывает снэкбар с уведомлением о необходимости дать разрешений
+     */
     private void permissionSnackbar() {
         Snackbar.make(mCoordinatorLayout, "Для корректной работы необходимо дать требуемые разрешения", Snackbar.LENGTH_LONG)
                 .setAction("Разрешить", new View.OnClickListener() {
@@ -487,13 +540,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }).show();
     }
 
-    private void sendEmail() {
+    /**
+     * Отправляет email
+     * @param email
+     */
+    private void sendEmail(String email) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { mUserMail.getText().toString() });
+        shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { email });
         startActivity(Intent.createChooser(shareIntent, "Отправить e-mail"));
     }
 
+    /**
+     * Открывает ссылку в браузере
+     * @param link
+     */
     private void openLink(String link) {
         if (!link.startsWith("http://") && !link.startsWith("https://")) {
             link = "http://" + link;
