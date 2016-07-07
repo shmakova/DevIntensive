@@ -269,6 +269,7 @@ public class MainActivity extends BaseActivity {
         if (mode == 1) {
             mFab.setImageResource(R.drawable.ic_done_black_24dp);
             ButterKnife.apply(mUserInfoViews, ENABLED, true);
+            mUserPhone.requestFocus();
             showProfilePlaceholder();
             lockToolbar();
             mCollapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
