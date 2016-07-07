@@ -11,28 +11,40 @@
     android:background="@mipmap/login_bg"
     tools:context="com.softdesign.devintensive.ui.activities.LoginActivity">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/spacing_large_56"
-        android:layout_marginRight="@dimen/spacing_large_56"
-        android:background="@color/white">
+        android:layout_marginRight="@dimen/spacing_large_56">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_medial_24">
+            android:paddingTop="@dimen/spacing_medial_24"
+            android:paddingBottom="@dimen/spacing_medial_24">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/color_accent"
-                android:text="@string/login"
-                android:id="@+id/textView"/>
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/login_indicator"
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/color_accent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/color_accent"
+                    android:text="@string/login"
+                    android:id="@+id/textView"/>
+            </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                     style="@style/login_field">
@@ -54,14 +66,14 @@
 
             <Button
                 android:id="@+id/login_button"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:background="@color/color_accent"
                 android:layout_gravity="center"
-                android:color="@color/white"
                 android:text="@string/login"
                 android:layout_marginTop="@dimen/spacing_medial_24"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/spacing_medium_32"
+                android:paddingRight="@dimen/spacing_medium_32"
+                android:theme="@style/login_button"/>
 
             <TextView
                 android:id="@+id/forgot_password"
@@ -74,5 +86,5 @@
                 android:fontFamily="sans-serif-condensed"/>
         </LinearLayout>
 
-    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>
