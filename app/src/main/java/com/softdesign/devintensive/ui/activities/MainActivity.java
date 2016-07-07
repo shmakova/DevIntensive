@@ -47,29 +47,39 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
 
     private DataManager mDataManager;
     private int mCurrentEditMode = 0;
 
-    private ImageView mCallImg;
-    private ImageView mSendEmailImg;
-    private ImageView mGithubImg;
-    private ImageView mVkImg;
-    private CoordinatorLayout mCoordinatorLayout;
-    private Toolbar mToolbar;
-    private DrawerLayout mNavigationDrawer;
-    private FloatingActionButton mFab;
-    private RelativeLayout mProfilePlaceholder;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private AppBarLayout mAppBarLayout;
-    private EditText mUserPhone, mUserMail, mUserVk, mUserGit, mUserBio;
+    @BindView(R.id.call_img) ImageView mCallImg;
+    @BindView(R.id.send_email_img) ImageView mSendEmailImg;
+    @BindView(R.id.github_img) ImageView mGithubImg;
+    @BindView(R.id.vk_img) ImageView mVkImg;
+    @BindView(R.id.main_coordinator_container) CoordinatorLayout mCoordinatorLayout;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.navigation_drawer) DrawerLayout mNavigationDrawer;
+    @BindView(R.id.fab) FloatingActionButton mFab;
+    @BindView(R.id.profile_placeholder) RelativeLayout mProfilePlaceholder;
+    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @BindView(R.id.appbar_layout) AppBarLayout mAppBarLayout;
+    @BindView(R.id.phone_et) EditText mUserPhone;
+    @BindView(R.id.email_et) EditText mUserMail;
+    @BindView(R.id.vk_et) EditText mUserVk;
+    @BindView(R.id.github_et) EditText mUserGit;
+    @BindView(R.id.bio_et) EditText mUserBio;
+    @BindView(R.id.user_photo_img) ImageView mProfileImage;
     private ImageView mAvatar;
-    private ImageView mProfileImage;
 
-    private List<EditText> mUserInfoViews;
+    @BindViews({ R.id.phone_et, R.id.email_et, R.id.vk_et, R.id.github_et, R.id.bio_et })
+    List<EditText> mUserInfoViews;
 
     private AppBarLayout.LayoutParams mAppBarParams = null;
     private File mPhotoFile = null;
@@ -83,37 +93,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.d(TAG, "onCreate");
         mDataManager = DataManager.getInstance();
 
-        mCallImg = (ImageView) findViewById(R.id.call_img);
-        mSendEmailImg = (ImageView) findViewById(R.id.send_email_img);
-        mGithubImg = (ImageView) findViewById(R.id.github_img);
-        mVkImg = (ImageView) findViewById(R.id.vk_img);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mUserPhone = (EditText) findViewById(R.id.phone_et);
-        mUserMail = (EditText) findViewById(R.id.email_et);
-        mUserVk = (EditText) findViewById(R.id.vk_et);
-        mUserGit= (EditText) findViewById(R.id.github_et);
-        mUserBio = (EditText) findViewById(R.id.bio_et);
-        mProfilePlaceholder = (RelativeLayout) findViewById(R.id.profile_placeholder);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
-        mProfileImage = (ImageView) findViewById(R.id.user_photo_img);
-
-        mUserInfoViews = new ArrayList<>();
-        mUserInfoViews.add(mUserPhone);
-        mUserInfoViews.add(mUserMail);
-        mUserInfoViews.add(mUserVk);
-        mUserInfoViews.add(mUserGit);
-        mUserInfoViews.add(mUserBio);
-
-        mFab.setOnClickListener(this);
-        mProfilePlaceholder.setOnClickListener(this);
-        mCallImg.setOnClickListener(this);
-        mSendEmailImg.setOnClickListener(this);
-        mGithubImg.setOnClickListener(this);
-        mVkImg.setOnClickListener(this);
+        ButterKnife.bind(this);
 
         setupToolBar();
         setupDrawer();
@@ -178,34 +158,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.d(TAG, "onRestart");
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab:
-                if (mCurrentEditMode == 0) {
-                    changeEditMode(1);
-                    mCurrentEditMode = 1;
-                } else {
-                    changeEditMode(0);
-                    mCurrentEditMode = 0;
-                }
-                break;
-            case R.id.profile_placeholder:
-                showDialog(ConstantManager.LOAD_PROFILE_PHOTO);
-                break;
-            case R.id.call_img:
-                phoneCall(mUserPhone.getText().toString());
-                break;
-            case R.id.send_email_img:
-                sendEmail(mUserMail.getText().toString());
-                break;
-            case R.id.github_img:
-                openLink(mUserGit.getText().toString());
-                break;
-            case R.id.vk_img:
-                openLink(mUserVk.getText().toString());
-                break;
+    @OnClick(R.id.fab)
+    public void onFabClick(View view) {
+        if (mCurrentEditMode == 0) {
+            changeEditMode(1);
+            mCurrentEditMode = 1;
+        } else {
+            changeEditMode(0);
+            mCurrentEditMode = 0;
         }
+    }
+
+    @OnClick(R.id.profile_placeholder)
+    public void onProfilePlaceholderClick(View view) {
+        showDialog(ConstantManager.LOAD_PROFILE_PHOTO);
+    }
+
+    @OnClick(R.id.call_img)
+    public void onCallImgClick(View view) {
+        phoneCall(mUserPhone.getText().toString());
+    }
+
+    @OnClick(R.id.send_email_img)
+    public void onSendEmailClick(View view) {
+        sendEmail(mUserMail.getText().toString());
+    }
+
+    @OnClick(R.id.github_img)
+    public void onGithubImgClick(View view) {
+        openLink(mUserGit.getText().toString());
+    }
+
+    @OnClick(R.id.vk_img)
+    public void onVkImgClick(View view) {
+        openLink(mUserVk.getText().toString());
     }
 
     @Override
@@ -282,29 +268,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void changeEditMode(int mode) {
         if (mode == 1) {
             mFab.setImageResource(R.drawable.ic_done_black_24dp);
-
-            for (EditText userValue : mUserInfoViews) {
-                userValue.setEnabled(true);
-                userValue.setFocusable(true);
-                userValue.setFocusableInTouchMode(true);
-                showProfilePlaceholder();
-                lockToolbar();
-                mCollapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
-            }
+            ButterKnife.apply(mUserInfoViews, ENABLED, true);
+            showProfilePlaceholder();
+            lockToolbar();
+            mCollapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
         } else {
             mFab.setImageResource(R.drawable.ic_create_black_24dp);
+            ButterKnife.apply(mUserInfoViews, ENABLED, false);
+            hideProfilePlaceholder();
+            unlockToolbar();
+            mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
 
-            for (EditText userValue : mUserInfoViews) {
-                userValue.setEnabled(false);
-                userValue.setFocusable(false);
-                userValue.setFocusableInTouchMode(false);
-
-                hideProfilePlaceholder();
-                unlockToolbar();
-                mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
-
-                saveUserInfoValue();
-            }
+            saveUserInfoValue();
         }
 
     }
@@ -563,4 +538,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
         startActivity(browseIntent);
     }
+
+    static final ButterKnife.Setter<View, Boolean> ENABLED = new ButterKnife.Setter<View, Boolean>() {
+        @Override public void set(View view, Boolean value, int index) {
+            view.setEnabled(value);
+            view.setFocusable(value);
+            view.setFocusableInTouchMode(value);
+        }
+    };
 }
