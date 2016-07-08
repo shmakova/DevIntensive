@@ -76,13 +76,15 @@
                 <LinearLayout style="@style/edit_text_wrapper">
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/phone_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/phone_et"
                             style="@style/edit_text"
                             android:inputType="phone"
-                            android:hint="@string/phone"/>
+                            android:hint="@string/phone"
+                            android:maxLength="20"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
@@ -103,6 +105,7 @@
                 <LinearLayout style="@style/edit_text_wrapper">
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/email_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText
@@ -130,6 +133,7 @@
                 <LinearLayout style="@style/edit_text_wrapper">
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/vk_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText
@@ -155,6 +159,7 @@
                 <LinearLayout style="@style/edit_text_wrapper">
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/github_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText

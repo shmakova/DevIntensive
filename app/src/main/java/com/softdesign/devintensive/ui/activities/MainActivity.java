@@ -3,6 +3,7 @@ package com.softdesign.devintensive.ui.activities;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +20,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -27,9 +29,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -59,23 +66,53 @@ public class MainActivity extends BaseActivity {
     private DataManager mDataManager;
     private int mCurrentEditMode = 0;
 
-    @BindView(R.id.call_img) ImageView mCallImg;
-    @BindView(R.id.send_email_img) ImageView mSendEmailImg;
-    @BindView(R.id.github_img) ImageView mGithubImg;
-    @BindView(R.id.vk_img) ImageView mVkImg;
-    @BindView(R.id.main_coordinator_container) CoordinatorLayout mCoordinatorLayout;
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.navigation_drawer) DrawerLayout mNavigationDrawer;
-    @BindView(R.id.fab) FloatingActionButton mFab;
-    @BindView(R.id.profile_placeholder) RelativeLayout mProfilePlaceholder;
-    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbarLayout;
-    @BindView(R.id.appbar_layout) AppBarLayout mAppBarLayout;
-    @BindView(R.id.phone_et) EditText mUserPhone;
-    @BindView(R.id.email_et) EditText mUserMail;
-    @BindView(R.id.vk_et) EditText mUserVk;
-    @BindView(R.id.github_et) EditText mUserGit;
-    @BindView(R.id.bio_et) EditText mUserBio;
-    @BindView(R.id.user_photo_img) ImageView mProfileImage;
+    @BindView(R.id.call_img)
+    ImageView mCallImg;
+    @BindView(R.id.send_email_img)
+    ImageView mSendEmailImg;
+    @BindView(R.id.github_img)
+    ImageView mGithubImg;
+    @BindView(R.id.vk_img)
+    ImageView mVkImg;
+
+    @BindView(R.id.main_coordinator_container)
+    CoordinatorLayout mCoordinatorLayout;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.navigation_drawer)
+    DrawerLayout mNavigationDrawer;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+
+    @BindView(R.id.profile_placeholder)
+    RelativeLayout mProfilePlaceholder;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @BindView(R.id.appbar_layout)
+    AppBarLayout mAppBarLayout;
+
+    @BindView(R.id.phone_et)
+    EditText mUserPhone;
+    @BindView(R.id.email_et)
+    EditText mUserMail;
+    @BindView(R.id.vk_et)
+    EditText mUserVk;
+    @BindView(R.id.github_et)
+    EditText mUserGit;
+    @BindView(R.id.bio_et)
+    EditText mUserBio;
+    @BindView(R.id.user_photo_img)
+    ImageView mProfileImage;
+
+    @BindView(R.id.phone_input_layout)
+    TextInputLayout mPhoneInputLayout;
+    @BindView(R.id.email_input_layout)
+    TextInputLayout mMailInputLayout;
+    @BindView(R.id.vk_input_layout)
+    TextInputLayout mVkInputLayout;
+    @BindView(R.id.github_input_layout)
+    TextInputLayout mGitInputLayout;
+
     private ImageView mAvatar;
 
     @BindViews({ R.id.phone_et, R.id.email_et, R.id.vk_et, R.id.github_et, R.id.bio_et })
@@ -94,6 +131,11 @@ public class MainActivity extends BaseActivity {
         mDataManager = DataManager.getInstance();
 
         ButterKnife.bind(this);
+
+        mUserPhone.addTextChangedListener(new UserTextWatcher(mUserPhone));
+        mUserMail.addTextChangedListener(new UserTextWatcher(mUserMail));
+        mUserVk.addTextChangedListener(new UserTextWatcher(mUserVk));
+        mUserGit.addTextChangedListener(new UserTextWatcher(mUserGit));
 
         setupToolBar();
         setupDrawer();
@@ -270,6 +312,8 @@ public class MainActivity extends BaseActivity {
             mFab.setImageResource(R.drawable.ic_done_black_24dp);
             ButterKnife.apply(mUserInfoViews, ENABLED, true);
             mUserPhone.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mUserPhone, InputMethodManager.SHOW_IMPLICIT);
             showProfilePlaceholder();
             lockToolbar();
             mCollapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
@@ -547,4 +591,145 @@ public class MainActivity extends BaseActivity {
             view.setFocusableInTouchMode(value);
         }
     };
+
+    /**
+     * Валидирует vk-ссылку
+     * @return
+     */
+    private boolean validateVk() {
+        String link = mUserVk.getText().toString().trim();
+
+        if (!link.isEmpty() && !link.startsWith("vk.com/")) {
+            mVkInputLayout.setError(getString(R.string.user_profile_error_link));
+            requestFocus(mUserVk);
+            return false;
+        } else {
+            mVkInputLayout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    /**
+     * Валидирует GitHub-ссылку
+     * @return
+     */
+    private boolean validateGit() {
+        String link = mUserGit.getText().toString().trim();
+
+        if (!link.isEmpty() && !link.startsWith("github.com/")) {
+            mGitInputLayout.setError(getString(R.string.user_profile_error_link));
+            requestFocus(mUserGit);
+            return false;
+        } else {
+            mGitInputLayout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    /**
+     * Валидирует e-mail
+     * @return
+     */
+    private boolean validateEmail() {
+        String email = mUserMail.getText().toString().trim();
+
+        if (!email.isEmpty() && !isValidEmail(email)) {
+            mMailInputLayout.setError(getString(R.string.user_profile_error_email));
+            requestFocus(mUserMail);
+            return false;
+        } else {
+            mMailInputLayout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private class UserTextWatcher implements TextWatcher {
+        private EditText editText;
+        private boolean backspacingFlag = false;
+        private boolean editedFlag = false;
+        private int cursorComplement;
+
+        private UserTextWatcher(EditText editText) {
+            this.editText = editText;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            switch (editText.getId()) {
+                case R.id.phone_et:
+                    cursorComplement = s.length() - editText.getSelectionStart();
+
+                    if (count > after) {
+                        backspacingFlag = true;
+                    } else {
+                        backspacingFlag = false;
+                    }
+                    break;
+            }
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            switch (editText.getId()) {
+                case R.id.phone_et:
+                    String string = mUserPhone.getText().toString();
+                    String phone = string.replaceAll("[^\\d]", "");
+
+                    if (!editedFlag) {
+                        if (phone.length() >= 9 && !backspacingFlag) {
+                            editedFlag = true;
+                            String ans = "+" + phone.substring(0, 1) + " "
+                                    + phone.substring(1, 4) + " "
+                                    + phone.substring(4, 7) + "-"
+                                    + phone.substring(7, 9) + "-"
+                                    + phone.substring(9);
+                            mUserPhone.setText(ans);
+                            mUserPhone.setSelection(mUserPhone.getText().length() - cursorComplement);
+                        } else if (phone.length() >= 7 && !backspacingFlag) {
+                            editedFlag = true;
+                            String ans = "+" + phone.substring(0, 1) + " "
+                                    + phone.substring(1, 4) + " "
+                                    + phone.substring(4);
+                            mUserPhone.setText(ans);
+                            mUserPhone.setSelection(mUserPhone.getText().length() - cursorComplement);
+                        } else if (phone.length() >= 4 && !backspacingFlag) {
+                            editedFlag = true;
+                            String ans = "+" + phone.substring(0, 1) + " "
+                                    + phone.substring(1);
+                            mUserPhone.setText(ans);
+                            mUserPhone.setSelection(mUserPhone.getText().length() - cursorComplement);
+                        }
+                    } else {
+                        editedFlag = false;
+                    }
+                    break;
+                case R.id.email_et:
+                    validateEmail();
+                    break;
+                case R.id.vk_et:
+                    validateVk();
+                    break;
+                case R.id.github_et:
+                    validateGit();
+                    break;
+            }
+        }
+    }
 }

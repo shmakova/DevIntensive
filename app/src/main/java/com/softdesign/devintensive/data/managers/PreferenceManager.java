@@ -39,11 +39,11 @@ public class PreferenceManager {
 
     public List<String> loadUserProfileData() {
         List<String> userFields = new ArrayList<>();
-        userFields.add(mSharedPreferences.getString(ConstantManager.USER_PHONE_KEY, "null"));
-        userFields.add(mSharedPreferences.getString(ConstantManager.USER_MAIL_KEY, "null"));
-        userFields.add(mSharedPreferences.getString(ConstantManager.USER_VK_KEY, "null"));
-        userFields.add(mSharedPreferences.getString(ConstantManager.USER_GIT_KEY, "null"));
-        userFields.add(mSharedPreferences.getString(ConstantManager.USER_BIO_KEY, "null"));
+        userFields.add(mSharedPreferences.getString(ConstantManager.USER_PHONE_KEY, ""));
+        userFields.add(mSharedPreferences.getString(ConstantManager.USER_MAIL_KEY, ""));
+        userFields.add(mSharedPreferences.getString(ConstantManager.USER_VK_KEY, "vk.com/"));
+        userFields.add(mSharedPreferences.getString(ConstantManager.USER_GIT_KEY, "github.com/"));
+        userFields.add(mSharedPreferences.getString(ConstantManager.USER_BIO_KEY, ""));
         return userFields;
     }
 

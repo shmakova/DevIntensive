@@ -14,6 +14,9 @@
     <string name="user_profile.dialog.cancel">Отмена</string>
     <string name="user_profile.dialog.title">Изменить фотографию профиля</string>
     <string name="user_profile_chose_message">Выберите файл</string>
+    <string name="user_profile.error.phone">Некорректный телефон</string>
+    <string name="user_profile.error.email">Некорректный e-mail</string>
+    <string name="user_profile.error.link">Некорректная ссылка</string>
     <string name="login">ВОЙТИ</string>
     <string name="login_password">Пароль</string>
     <string name="forgot_password">Забыли пароль?</string>
