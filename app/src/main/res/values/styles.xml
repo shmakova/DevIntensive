@@ -38,7 +38,7 @@
 
     <style name="vertical_line">
         <item name="android:layout_width">@dimen/line_size</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">@dimen/size_medium_56</item>
         <item name="android:background">@color/grey_light</item>
     </style>
 

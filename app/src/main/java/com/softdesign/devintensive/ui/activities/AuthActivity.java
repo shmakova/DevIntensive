@@ -6,8 +6,8 @@ import android.util.Log;
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.utils.ConstantManager;
 
-public class LoginActivity extends BaseActivity {
-    static final String TAG = ConstantManager.TAG_PREFIX + "LoginActivity";
+public class AuthActivity extends BaseActivity {
+    static final String TAG = ConstantManager.TAG_PREFIX + "AuthActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
