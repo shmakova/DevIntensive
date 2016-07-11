@@ -45,8 +45,8 @@ public class DataManager {
 
     //region ========= Network ==========
 
-    public Call<UserModelRes> loginUser(String lastModified, UserModelReq userModelReq) {
-        return mRestService.loginUser(lastModified, userModelReq);
+    public Call<UserModelRes> loginUser(UserModelReq userModelReq) {
+        return mRestService.loginUser(userModelReq);
     }
 
     //endregion

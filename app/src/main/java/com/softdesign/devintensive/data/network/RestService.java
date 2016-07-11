@@ -13,11 +13,6 @@ import retrofit2.http.POST;
  * Created by shmakova on 09.07.16.
  */
 public interface RestService {
-
-    @Headers({
-        "Custom-Header: my header value"
-    })
     @POST("login")
-    Call<UserModelRes> loginUser (@Header("Last-Modified") String lasMod,
-                                  @Body UserModelReq req);
+    Call<UserModelRes> loginUser (@Body UserModelReq req);
 }

@@ -138,7 +138,6 @@ public class AuthActivity extends BaseActivity {
     private void signIn() {
         if (NetworkStatusChecker.isNetworkAvailable(this)) {
             Call<UserModelRes> call = mDataManager.loginUser(
-                    new Date().toString(),
                     new UserModelReq(mLogin.getText().toString(), mPassword.getText().toString()));
             call.enqueue(new Callback<UserModelRes>() {
                 @Override
