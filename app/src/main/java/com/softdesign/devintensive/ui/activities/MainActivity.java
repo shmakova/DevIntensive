@@ -40,6 +40,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
@@ -113,10 +114,20 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.github_input_layout)
     TextInputLayout mGitInputLayout;
 
+    @BindView(R.id.rating)
+    TextView mUserValueRating;
+    @BindView(R.id.loc)
+    TextView mUserValueCodeLines;
+    @BindView(R.id.projects)
+    TextView mUserValueProjects;
+
     private ImageView mAvatar;
 
     @BindViews({ R.id.phone_et, R.id.email_et, R.id.vk_et, R.id.github_et, R.id.bio_et })
     List<EditText> mUserInfoViews;
+
+    @BindViews({ R.id.rating, R.id.loc, R.id.projects })
+    List<TextView> mUserValueViews;
 
     private AppBarLayout.LayoutParams mAppBarParams = null;
     private File mPhotoFile = null;
@@ -139,7 +150,8 @@ public class MainActivity extends BaseActivity {
 
         setupToolBar();
         setupDrawer();
-        loadUserInfoValue();
+        initUserFields();
+        initUserInfoValues ();
 
         Picasso.with(this)
                 .load(mDataManager.getPreferenceManager().loadUserPhoto())
@@ -179,7 +191,7 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause");
-        saveUserInfoValue();
+        saveUserFields();
     }
 
     @Override
@@ -324,7 +336,7 @@ public class MainActivity extends BaseActivity {
             unlockToolbar();
             mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.white));
 
-            saveUserInfoValue();
+            saveUserFields();
         }
 
     }
@@ -332,7 +344,7 @@ public class MainActivity extends BaseActivity {
     /**
      * Загружает данные пользователя
      */
-    private void loadUserInfoValue() {
+    private void initUserFields() {
         List<String> userData = mDataManager.getPreferenceManager().loadUserProfileData();
 
         for (int i = 0; i < userData.size(); i++) {
@@ -343,7 +355,7 @@ public class MainActivity extends BaseActivity {
     /**
      * Сохраняет данные пользователя
      */
-    private void saveUserInfoValue() {
+    private void saveUserFields() {
         List<String> userData = new ArrayList<>();
 
         for (EditText userFieldView : mUserInfoViews) {
@@ -730,6 +742,14 @@ public class MainActivity extends BaseActivity {
                     validateGit();
                     break;
             }
+        }
+    }
+
+    private void initUserInfoValues() {
+        List<String> userData = mDataManager.getPreferenceManager().loadUserProfilesValues();
+
+        for (int i = 0; i < userData.size(); i++) {
+            mUserValueViews.get(i).setText(userData.get(i));
         }
     }
 }

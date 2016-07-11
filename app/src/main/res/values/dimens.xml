@@ -23,4 +23,11 @@
     <dimen name="fab_right_space">16dp</dimen>
     <dimen name="placeholder_photo_size_90">90dp</dimen>
     <dimen name="user_info_size">112dp</dimen>
+    <dimen name="authorization_box_width">240dp</dimen>
+
+    <!-- Fonts -->
+    <dimen name="font_medium_20">20sp</dimen>
+    <dimen name="font_small_14">14sp</dimen>
+    <dimen name="login_button_width">126dp</dimen>
+
 </resources>
