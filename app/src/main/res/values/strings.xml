@@ -5,12 +5,19 @@
     <string name="vk">Профиль в VK</string>
     <string name="github">Репозиторий</string>
     <string name="bio">О себе</string>
-    <string name="bio_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-        tincidunt metus pulvinar, tristique ligula nec, efficitur nibh. Pellentesque habitant morbi
-        tristique senectus et netus et malesuada fames ac turpis egestas. Etiam congue est felis, a
-        bibendum nunc tempor in. Donec eget gravida ex. Aenean tempus eget odio id hendrerit. Duis
-        tempor ultrices ligula eget consectetur. Aliquam erat volutpat.</string>
     <string name="projects">Проектов</string>
     <string name="loc">Написано строк кода</string>
     <string name="rating">Рейтинг</string>
+    <string name="user_profile.placeholder.image">Изменить фотографию профиля</string>
+    <string name="user_profile.dialog.gallery">Загрузить из галереи</string>
+    <string name="user_profile.dialog.camera">Сделать снимок</string>
+    <string name="user_profile.dialog.cancel">Отмена</string>
+    <string name="user_profile.dialog.title">Изменить фотографию профиля</string>
+    <string name="user_profile_chose_message">Выберите файл</string>
+    <string name="user_profile.error.phone">Некорректный телефон</string>
+    <string name="user_profile.error.email">Некорректный e-mail</string>
+    <string name="user_profile.error.link">Некорректная ссылка</string>
+    <string name="login">ВОЙТИ</string>
+    <string name="login_password">Пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
 </resources>

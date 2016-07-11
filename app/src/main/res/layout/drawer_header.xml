@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/spacing_normal_16"
     android:paddingLeft="@dimen/spacing_normal_16"
     android:paddingBottom="@dimen/spacing_small_8"
-    android:background="@drawable/header_bg">
+    android:background="@mipmap/nav_header_bg">
 
     <ImageView
         android:id="@+id/avatar"
