@@ -18,7 +18,9 @@ import com.softdesign.devintensive.data.network.res.UserModelRes;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.NetworkStatusChecker;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +57,8 @@ public class AuthActivity extends BaseActivity {
         mDataManager = DataManager.getInstance();
 
         ButterKnife.bind(this);
+        mLogin.setText("shmakova-nastya@yandex.ru");
+        mPassword.setText("iliich");
     }
 
     @Override
@@ -161,13 +165,35 @@ public class AuthActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Сохраняет значения рейтинга/строк кода/проектов
+     * @param userModel
+     */
     private void saveUserValues(UserModelRes userModel) {
         int[] userValues = {
                 userModel.getData().getUser().getProfileValues().getRating(),
                 userModel.getData().getUser().getProfileValues().getLinesCode(),
-                userModel.getData().getUser().getProfileValues().getProjects()
+                userModel.getData().getUser().getProfileValues().getProjects(),
         };
 
         mDataManager.getPreferenceManager().saveUserProfileValues(userValues);
+
+        List<String> userData = new ArrayList<>();
+        userData.add(userModel.getData().getUser().getContacts().getPhone());
+        userData.add(userModel.getData().getUser().getContacts().getEmail());
+        userData.add(userModel.getData().getUser().getContacts().getVk());
+        userData.add(userModel.getData().getUser().getRepositories().getRepo().get(0).getGit());
+        userData.add(userModel.getData().getUser().getPublicInfo().getBio());
+        mDataManager.getPreferenceManager().saveUserProfileData(userData);
+
+        String userName = userModel.getData().getUser().getSecondName()
+                + " " + userModel.getData().getUser().getFirstName();
+        mDataManager.getPreferenceManager().saveUserName(userName);
+
+        String photoUrl =  userModel.getData().getUser().getPublicInfo().getPhoto();
+        mDataManager.getPreferenceManager().saveUserPhoto(Uri.parse(photoUrl));
+
+        String avatarUrl =  userModel.getData().getUser().getPublicInfo().getAvatar();
+        mDataManager.getPreferenceManager().saveUserAvatar(Uri.parse(avatarUrl));
     }
 }

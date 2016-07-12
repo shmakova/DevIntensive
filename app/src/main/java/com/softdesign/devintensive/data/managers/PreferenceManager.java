@@ -30,6 +30,8 @@ public class PreferenceManager {
             ConstantManager.USER_PROJECTS_VALUE
     };
 
+    private static final String USER_NAME = ConstantManager.USER_NAME_KEY;
+
 
     public PreferenceManager() {
         this.mSharedPreferences = DevintensiveApplication.getSharedPreferences();
@@ -64,7 +66,19 @@ public class PreferenceManager {
     public Uri loadUserPhoto() {
         return Uri.parse(mSharedPreferences.getString(
                 ConstantManager.USER_PHOTO_KEY,
-                "android:resource://com.softdesign.devintensive/drawable/photo"));
+                "android:resource://com.softdesign.devintensive/mipmap/user_bg"));
+    }
+
+    public void saveUserAvatar(Uri uri) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.USER_AVATAR_KEY, uri.toString());
+        editor.apply();
+    }
+
+    public Uri loadUserAvatar() {
+        return Uri.parse(mSharedPreferences.getString(
+                ConstantManager.USER_AVATAR_KEY,
+                "android:resource://com.softdesign.devintensive/mipmap/user_bg"));
     }
 
     public void saveAuthToken(String authToken) {
@@ -87,6 +101,20 @@ public class PreferenceManager {
         return mSharedPreferences.getString(ConstantManager.USER_ID_KEY, "null");
     }
 
+    public void saveUserName(String userName) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.USER_NAME_KEY, userName);
+        editor.apply();
+    }
+
+    public String getUserName() {
+        return mSharedPreferences.getString(ConstantManager.USER_NAME_KEY, "");
+    }
+
+    public String getEmail() {
+        return mSharedPreferences.getString(ConstantManager.USER_MAIL_KEY, "");
+    }
+
     public void saveUserProfileValues(int[] userValues) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
@@ -102,6 +130,7 @@ public class PreferenceManager {
         userValues.add(mSharedPreferences.getString(ConstantManager.USER_RATING_VALUE, "0"));
         userValues.add(mSharedPreferences.getString(ConstantManager.USER_CODE_LINES_VALUE, "0"));
         userValues.add(mSharedPreferences.getString(ConstantManager.USER_PROJECTS_VALUE, "0"));
+
         return userValues;
     }
 }

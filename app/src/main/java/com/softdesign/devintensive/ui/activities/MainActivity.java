@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -44,8 +43,8 @@ import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
+import com.softdesign.devintensive.utils.CircleTransform;
 import com.softdesign.devintensive.utils.ConstantManager;
-import com.softdesign.devintensive.utils.RoundedAvatarDrawable;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -122,6 +121,8 @@ public class MainActivity extends BaseActivity {
     TextView mUserValueProjects;
 
     private ImageView mAvatar;
+    private TextView mEmail;
+    private TextView mUserName;
 
     @BindViews({ R.id.phone_et, R.id.email_et, R.id.vk_et, R.id.github_et, R.id.bio_et })
     List<EditText> mUserInfoViews;
@@ -155,7 +156,7 @@ public class MainActivity extends BaseActivity {
 
         Picasso.with(this)
                 .load(mDataManager.getPreferenceManager().loadUserPhoto())
-                .placeholder(R.drawable.photo)
+                .placeholder(R.mipmap.nav_header_bg)
                 .into(mProfileImage);
 
         if (savedInstanceState == null) {
@@ -291,6 +292,7 @@ public class MainActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(mDataManager.getPreferenceManager().getUserName());
         }
     }
 
@@ -300,8 +302,22 @@ public class MainActivity extends BaseActivity {
     private void setupDrawer() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mAvatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
-        BitmapDrawable bImage = (BitmapDrawable) ContextCompat.getDrawable(this, R.drawable.avatar);
-        mAvatar.setImageDrawable(new RoundedAvatarDrawable(bImage.getBitmap()));
+
+        Uri avatarUri = mDataManager.getPreferenceManager().loadUserAvatar();
+
+        Picasso.with(this)
+                .load(mDataManager.getPreferenceManager().loadUserAvatar())
+                .placeholder(R.mipmap.nav_header_bg)
+                .transform(new CircleTransform())
+                .into(mAvatar);
+        //BitmapDrawable bImage = (BitmapDrawable) ContextCompat.getDrawable(this, R.mipmap.login_bg);
+        //mAvatar.setImageDrawable(new RoundedAvatarDrawable(bImage.getBitmap()));
+
+        mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_name_txt);
+        mUserName.setText(mDataManager.getPreferenceManager().getUserName());
+
+        mEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_email_txt);
+        mEmail.setText(mDataManager.getPreferenceManager().getEmail());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -713,20 +729,23 @@ public class MainActivity extends BaseActivity {
                                     + phone.substring(7, 9) + "-"
                                     + phone.substring(9);
                             mUserPhone.setText(ans);
-                            mUserPhone.setSelection(mUserPhone.getText().length() - cursorComplement);
+                            int selection = mUserPhone.getText().length() - cursorComplement;
+                            mUserPhone.setSelection(selection < 0 ? mUserPhone.getText().length() : selection);
                         } else if (phone.length() >= 7 && !backspacingFlag) {
                             editedFlag = true;
                             String ans = "+" + phone.substring(0, 1) + " "
                                     + phone.substring(1, 4) + " "
                                     + phone.substring(4);
                             mUserPhone.setText(ans);
-                            mUserPhone.setSelection(mUserPhone.getText().length() - cursorComplement);
+                            int selection = mUserPhone.getText().length() - cursorComplement;
+                            mUserPhone.setSelection(selection < 0 ? mUserPhone.getText().length() : selection);
                         } else if (phone.length() >= 4 && !backspacingFlag) {
                             editedFlag = true;
                             String ans = "+" + phone.substring(0, 1) + " "
                                     + phone.substring(1);
                             mUserPhone.setText(ans);
-                            mUserPhone.setSelection(mUserPhone.getText().length() - cursorComplement);
+                            int selection = mUserPhone.getText().length() - cursorComplement;
+                            mUserPhone.setSelection(selection < 0 ? mUserPhone.getText().length() : selection);
                         }
                     } else {
                         editedFlag = false;
