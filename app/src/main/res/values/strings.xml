@@ -1,4 +1,7 @@
 <resources>
+    <string name="ff_regular">sans-serif</string>
+    <string name="ff_medium">sans-serif-medium</string>
+
     <string name="app_name">Шмакова Анастасия</string>
     <string name="phone">Мобильный</string>
     <string name="e_mail">E-mail</string>
@@ -17,7 +20,11 @@
     <string name="user_profile.error.phone">Некорректный телефон</string>
     <string name="user_profile.error.email">Некорректный e-mail</string>
     <string name="user_profile.error.link">Некорректная ссылка</string>
-    <string name="login">ВОЙТИ</string>
-    <string name="login_password">Пароль</string>
-    <string name="forgot_password">Забыли пароль?</string>
+
+    <!-- AuthActivity -->
+    <string name="auth.authorization_enter">Войти</string>
+    <string name="auth.email">Введите e-mail</string>
+    <string name="auth.password">Введите пароль</string>
+    <string name="auth.login">Войти</string>
+    <string name="auth.remember">Забыли пароль?</string>
 </resources>

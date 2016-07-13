@@ -75,6 +75,57 @@
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
+        <LinearLayout
+            android:id="@+id/user_info_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/user_info_size"
+            android:background="@color/color_primary"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_behavior=".ui.behaviors.UserInfoBehavior"
+            app:behavior_min_height="@dimen/size_medium_56">
+
+            <LinearLayout style="@style/text_wrapper">
+                <TextView
+                    style="@style/top_bar_text.large"
+                    android:text="5"
+                    android:id="@+id/rating" />
+
+                <TextView
+                    style="@style/top_bar_text"
+                    android:text="@string/rating"
+                    android:id="@+id/rating_text"/>
+            </LinearLayout>
+
+            <View style="@style/vertical_line"></View>
+
+            <LinearLayout style="@style/text_wrapper.middle">
+                <TextView
+                    style="@style/top_bar_text.large"
+                    android:text="1020"
+                    android:id="@+id/loc" />
+
+                <TextView
+                    style="@style/top_bar_text"
+                    android:text="@string/loc"
+                    android:id="@+id/loc_text"/>
+            </LinearLayout>
+
+            <View style="@style/vertical_line"></View>
+
+            <LinearLayout style="@style/text_wrapper">
+                <TextView
+                    style="@style/top_bar_text.large"
+                    android:text="9"
+                    android:id="@+id/projects" />
+
+                <TextView
+                    style="@style/top_bar_text"
+                    android:text="@string/projects"
+                    android:id="@+id/projects_text"/>
+            </LinearLayout>
+        </LinearLayout>
+
         <include layout="@layout/user_profile_content"/>
 
         <android.support.design.widget.FloatingActionButton
