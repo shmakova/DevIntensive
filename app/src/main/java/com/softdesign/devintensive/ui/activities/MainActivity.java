@@ -61,7 +61,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
-    private static final String TAG = ConstantManager.TAG_PREFIX + "Main Activity";
+    private static final String TAG = ConstantManager.TAG_PREFIX + "MainActivity";
 
     private DataManager mDataManager;
     private int mCurrentEditMode = 0;

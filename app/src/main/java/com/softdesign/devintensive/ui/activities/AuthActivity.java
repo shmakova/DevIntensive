@@ -132,7 +132,7 @@ public class AuthActivity extends BaseActivity {
         mDataManager.getPreferenceManager().saveUserId(userModel.getData().getUser().getId());
         saveUserValues(userModel);
 
-        Intent loginIntent = new Intent(this, MainActivity.class);
+        Intent loginIntent = new Intent(this, UserListActivity.class);
         startActivity(loginIntent);
     }
 
