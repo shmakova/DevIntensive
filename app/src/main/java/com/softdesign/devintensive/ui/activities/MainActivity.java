@@ -303,15 +303,11 @@ public class MainActivity extends BaseActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mAvatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
 
-        Uri avatarUri = mDataManager.getPreferenceManager().loadUserAvatar();
-
         Picasso.with(this)
                 .load(mDataManager.getPreferenceManager().loadUserAvatar())
                 .placeholder(R.mipmap.nav_header_bg)
                 .transform(new CircleTransform())
                 .into(mAvatar);
-        //BitmapDrawable bImage = (BitmapDrawable) ContextCompat.getDrawable(this, R.mipmap.login_bg);
-        //mAvatar.setImageDrawable(new RoundedAvatarDrawable(bImage.getBitmap()));
 
         mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_name_txt);
         mUserName.setText(mDataManager.getPreferenceManager().getUserName());

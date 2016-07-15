@@ -1,5 +1,7 @@
 package com.softdesign.devintensive.ui.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -81,10 +83,7 @@ public class ProfileUserActivity extends BaseActivity {
         mRepoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar
-                    .make(mCollapsingToolbarLayout, "Репозиторий " + repositories.get(position), Snackbar.LENGTH_LONG)
-                    .show();
-
+                openLink(repositories.get(position));
             }
         });
 
@@ -100,5 +99,18 @@ public class ProfileUserActivity extends BaseActivity {
                 .placeholder(R.mipmap.user_bg)
                 .error(R.mipmap.user_bg)
                 .into(mProfileImage);
+    }
+
+    /**
+     * Открывает ссылку в браузере
+     * @param link
+     */
+    private void openLink(String link) {
+        if (!link.startsWith("http://") && !link.startsWith("https://")) {
+            link = "http://" + link;
+        }
+
+        Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+        startActivity(browseIntent);
     }
 }
