@@ -1,0 +1,63 @@
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior=".ui.behaviors.CustomNestedScrollBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/item">
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_github_circle" />
+
+                <ListView
+                    android:id="@+id/repositories_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_medium_32">
+
+                </ListView>
+
+            </LinearLayout>
+
+            <View style="@style/line"></View>
+
+            <LinearLayout style="@style/item">
+                <ImageView
+                    style="@style/icon.left"
+                    android:src="@drawable/ic_account_circle" />
+
+                <LinearLayout style="@style/edit_text_wrapper">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/bio_et"
+                            style="@style/edit_text"
+                            android:hint="@string/bio"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/icon.right"
+                    android:src="@drawable/ic_visibility_black_24dp" />
+            </LinearLayout>
+
+            <View style="@style/line"></View>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

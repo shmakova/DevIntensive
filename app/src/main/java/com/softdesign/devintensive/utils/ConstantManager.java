@@ -18,6 +18,7 @@ public interface ConstantManager {
     String USER_ID_KEY = "USER_ID_KEY";
     String USER_NAME_KEY = "USER_NAME_KEY";
     String USER_AVATAR_KEY = "USER_AVATAR_KEY";
+    String PARCELABLE_KEY = "PARCELABLE_KEY";
 
     String USER_RATING_VALUE = "USER_RATING_VALUE";
     String USER_CODE_LINES_VALUE = "USER_CODE_LINES_VALUE";
@@ -29,6 +30,7 @@ public interface ConstantManager {
 
     int PERMISSION_REQUEST_SETTINGS_CODE = 101;
     int CAMERA_REQUEST_PERMISSION_CODE = 102;
+
 
 
 }
