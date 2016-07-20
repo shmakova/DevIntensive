@@ -1,8 +1,10 @@
 package com.softdesign.devintensive.ui.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -12,27 +14,27 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.managers.DataManager;
-import com.softdesign.devintensive.data.network.res.UserListRes;
 import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.adapters.UsersAdapter;
+import com.softdesign.devintensive.utils.CircleTransform;
 import com.softdesign.devintensive.utils.ConstantManager;
+import com.squareup.picasso.Picasso;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UserListActivity extends BaseActivity {
     private static final String TAG = ConstantManager.TAG_PREFIX + "UserListActivity";
@@ -52,6 +54,9 @@ public class UserListActivity extends BaseActivity {
     private MenuItem mSearchItem;
     private String mQuery;
     private Handler mHandler;
+    private ImageView mAvatar;
+    private TextView mEmail;
+    private TextView mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +95,30 @@ public class UserListActivity extends BaseActivity {
     }
 
     private void loadUsersFromDb() {
-        if (mDataManager.getUserListFromDb().size() == 0) {
-            showSnackBar("Список пользователей не может быть загружен");
-        } else {
-            showUsers(mDataManager.getUserListFromDb());
+        new LoadUsersTask().execute();
+    }
+
+    private class LoadUsersTask extends AsyncTask<Void, Void, List<User>> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<User> doInBackground(Void... params) {
+            List<User> userList = mDataManager.getUserListFromDb();
+            return userList;
+        }
+
+        @Override
+        protected void onPostExecute(List<User> result) {
+            super.onPostExecute(result);
+
+            if (result.size() == 0) {
+                showSnackBar("Список пользователей не может быть загружен");
+            } else {
+                showUsers(result);
+            }
         }
     }
 
@@ -107,7 +132,48 @@ public class UserListActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Дроуэр
+     */
     private void setupDrawer() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mAvatar = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.avatar);
+
+        Picasso.with(this)
+                .load(mDataManager.getPreferenceManager().loadUserAvatar())
+                .placeholder(R.mipmap.nav_header_bg)
+                .transform(new CircleTransform())
+                .into(mAvatar);
+
+        mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_name_txt);
+        mUserName.setText(mDataManager.getPreferenceManager().getUserName());
+
+        mEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_email_txt);
+        mEmail.setText(mDataManager.getPreferenceManager().getEmail());
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                item.setChecked(true);
+                mNavigationDrawer.closeDrawer(GravityCompat.START);
+
+                switch (item.getItemId()) {
+                    case R.id.user_profile_menu:
+                        goToProfile();
+                        break;
+                    case R.id.team_menu:
+                        break;
+                }
+
+                return false;
+            }
+        });
+    }
+
+    private void goToProfile() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override

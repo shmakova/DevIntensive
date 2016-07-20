@@ -110,7 +110,7 @@ public class Repository {
         this.id = id;
     }
 
-    @Generated(hash = 1976272162)
+    @Keep
     public Repository(Long id, @NotNull String remoteId, String repositoryName,
             String userRemoteId) {
         this.id = id;
@@ -124,5 +124,9 @@ public class Repository {
         this.repositoryName = repositoryRes.getGit();
         this.userRemoteId = userId;
         this.remoteId = repositoryRes.getId();
+    }
+
+    @Generated(hash = 984204935)
+    public Repository() {
     }
 }

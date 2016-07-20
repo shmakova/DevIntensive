@@ -19,8 +19,6 @@ import java.util.List;
 
 import retrofit2.Call;
 
-import static com.softdesign.devintensive.data.storage.models.UserDao.Properties.CodeLines;
-
 /**
  * Created by shmakova on 28.06.16.
  */

@@ -20,15 +20,12 @@ import com.softdesign.devintensive.data.network.res.UserModelRes;
 import com.softdesign.devintensive.data.storage.models.Repository;
 import com.softdesign.devintensive.data.storage.models.RepositoryDao;
 import com.softdesign.devintensive.data.storage.models.User;
-import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.data.storage.models.UserDao;
-import com.softdesign.devintensive.ui.adapters.UsersAdapter;
 import com.softdesign.devintensive.utils.AppConfig;
 import com.softdesign.devintensive.utils.ConstantManager;
 import com.softdesign.devintensive.utils.NetworkStatusChecker;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -142,7 +139,6 @@ public class AuthActivity extends BaseActivity {
      * Логин
      */
     private void loginSuccess(UserModelRes userModel) {
-        showSnackBar(userModel.getData().getToken());
         mDataManager.getPreferenceManager().saveAuthToken(userModel.getData().getToken());
         mDataManager.getPreferenceManager().saveUserId(userModel.getData().getUser().getId());
         saveUserValues(userModel);

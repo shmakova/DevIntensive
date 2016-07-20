@@ -201,7 +201,7 @@ public class User {
         this.id = id;
     }
 
-    @Generated(hash = 1023608416)
+    @Keep
     public User(Long id, @NotNull String remoteId, String photo, @NotNull String fullName,
             @NotNull String searchName, int rating, int codeLines, int projects, String bio) {
         this.id = id;
@@ -225,6 +225,10 @@ public class User {
         this.codeLines = userRes.getProfileValues().getLinesCode();;
         this.projects = userRes.getProfileValues().getProjects();
         this.bio = userRes.getPublicInfo().getBio();
+    }
+
+    @Generated(hash = 586692638)
+    public User() {
     }
 
 }
