@@ -319,12 +319,25 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                showSnackBar(item.getTitle().toString());
                 item.setChecked(true);
                 mNavigationDrawer.closeDrawer(GravityCompat.START);
+
+                switch (item.getItemId()) {
+                    case R.id.user_profile_menu:
+                        break;
+                    case R.id.team_menu:
+                        goToUserList();
+                        break;
+                }
+
                 return false;
             }
         });
+    }
+
+    private void goToUserList() {
+        Intent intent = new Intent(this, UserListActivity.class);
+        startActivity(intent);
     }
 
     /**
